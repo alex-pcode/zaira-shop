@@ -165,6 +165,9 @@ footer a:hover{color:var(--sand)}
   .toast{left:16px;right:16px;max-width:none}
   footer{padding-bottom:96px}
 }
+.menu-btn{display:none}
+.mobile-nav{display:none}
+@media (max-width:820px){.menu-btn{display:grid}header.site.menu-open .mobile-nav{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;padding:8px 24px 18px;border-bottom:1px solid var(--line);box-shadow:0 14px 24px -18px rgba(0,0,0,.35)}.mobile-nav a{padding:13px 0;font-size:17px;border-bottom:1px solid var(--line)}.mobile-nav a:last-child{border-bottom:0}}
 </style>
 </head>
 <body>
@@ -185,6 +188,7 @@ footer a:hover{color:var(--sand)}
     <div class="icons">
       <a class="icon-btn" href="#" aria-label="Pretraga"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></a>
       <a class="icon-btn" href="#" aria-label="Korpa"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></a>
+      <button class="icon-btn menu-btn" aria-label="Meni" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
 </header>
@@ -379,6 +383,15 @@ new IntersectionObserver(([e]) => $('stickyBuy').classList.toggle('show', !e.isI
   .observe($('addBtn'));
 
 selectPrint(state.print);
+</script>
+<script>
+/* mobile menu: collects the header's nav links into one dropdown */
+(function(){var h=document.querySelector('header.site'),b=h&&h.querySelector('.menu-btn');if(!b)return;
+var p=document.createElement('nav');p.className='mobile-nav';p.setAttribute('aria-label','Meni');
+h.querySelectorAll('nav.main a').forEach(function(a){var c=a.cloneNode(true);c.removeAttribute('class');p.appendChild(c)});
+p.style.background=getComputedStyle(document.body).backgroundColor;h.appendChild(p);
+b.addEventListener('click',function(){var o=h.classList.toggle('menu-open');b.setAttribute('aria-expanded',o)});
+p.addEventListener('click',function(e){if(e.target.closest('a')){h.classList.remove('menu-open');b.setAttribute('aria-expanded','false')}});})();
 </script>
 </body>
 </html>
